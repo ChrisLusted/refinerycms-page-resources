@@ -1,7 +1,5 @@
 class TranslatePageResourceCaptions < ActiveRecord::Migration
   def up
-    add_column :refinery_page_resources, :id, :primary_key
-
     Refinery::PageResource.reset_column_information
     unless defined?(Refinery::PageResource::Translation) && Refinery::PageResource::Translation.table_exists?
       Refinery::PageResource.create_translation_table!({
@@ -16,7 +14,5 @@ class TranslatePageResourceCaptions < ActiveRecord::Migration
     Refinery::PageResource.reset_column_information
 
     Refinery::PageResource.drop_translation_table! :migrate_data => true
-
-    remove_column Refinery::PageResource.table_name, :id
   end
 end
