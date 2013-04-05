@@ -29,13 +29,12 @@ module Refinery
       end
 
       config.after_initialize do
-        Refinery::Pages::Tab.register do |tab|
-          register tab
-        end
-
-        if defined?(Refinery::Blog::Tab)
-          Refinery::Blog::Tab.register do |tab|
-            register tab
+        Refinery::PageImages.attach_to.each do |a|
+          admin_tab = a[:tab].constantize
+          if defined?(admin_tab)
+            admin_tab.register do |tab|
+              register tab
+            end
           end
         end
 
