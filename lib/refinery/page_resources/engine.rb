@@ -21,8 +21,10 @@ module Refinery
 
       config.to_prepare do
         require 'refinerycms-pages'
-        Refinery::Page.send :has_many_page_resources
-        Refinery::Blog::Post.send :has_many_page_resources if defined?(::Refinery::Blog)
+        Refinery::Resources.attach_to.each do |a|
+          engine = a[:engine].constantize
+          engine.send(:has_many_page_resources)
+        end
         Refinery::Resource.module_eval do
           has_many :page_resources, :dependent => :destroy
         end
