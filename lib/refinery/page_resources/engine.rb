@@ -21,7 +21,7 @@ module Refinery
 
       config.to_prepare do
         require 'refinerycms-pages'
-        Refinery::Resources.attach_to.each do |a|
+        Refinery::PageResources.attach_to.each do |a|
           engine = a[:engine].constantize
           engine.send(:has_many_page_resources)
         end
@@ -31,7 +31,7 @@ module Refinery
       end
 
       config.after_initialize do
-        Refinery::PageImages.attach_to.each do |a|
+        Refinery::PageResources.attach_to.each do |a|
           admin_tab = a[:tab].constantize
           if defined?(admin_tab)
             admin_tab.register do |tab|
